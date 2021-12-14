@@ -101,6 +101,7 @@ private Q_SLOTS:
     void updateDetailWidget();
 
 public Q_SLOTS:
+    void hidePeersDetail();
     void clear(bool keep_prompt = false);
     void fontBigger();
     void fontSmaller();

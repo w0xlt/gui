@@ -555,6 +555,7 @@ RPCConsole::RPCConsole(interfaces::Node& node, const PlatformStyle *_platformSty
     ui->lineEdit->setMaxLength(16 * 1024 * 1024);
     ui->messagesWidget->installEventFilter(this);
 
+    connect(ui->hidePeersDetailButton, &QAbstractButton::clicked, [this] { hidePeersDetail(); });
     connect(ui->clearButton, &QAbstractButton::clicked, [this] { clear(); });
     connect(ui->fontBiggerButton, &QAbstractButton::clicked, this, &RPCConsole::fontBigger);
     connect(ui->fontSmallerButton, &QAbstractButton::clicked, this, &RPCConsole::fontSmaller);
@@ -813,6 +814,12 @@ static QString categoryClass(int category)
     case RPCConsole::CMD_ERROR:    return "cmd-error"; break;
     default:                       return "misc";
     }
+}
+
+void RPCConsole::hidePeersDetail()
+{
+    clearSelectedNode();
+    ui->peersTabRightPanel->hide();
 }
 
 void RPCConsole::fontBigger()
@@ -1217,6 +1224,7 @@ void RPCConsole::updateDetailWidget()
         ui->peerPingWait->setText(GUIUtil::formatPingTime(stats->nodeStateStats.m_ping_wait));
     }
 
+    ui->hidePeersDetailButton->setIcon(platformStyle->SingleColorIcon(QStringLiteral(":/icons/remove")));
     ui->peersTabRightPanel->show();
 }
 
